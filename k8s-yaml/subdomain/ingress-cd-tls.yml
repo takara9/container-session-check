@@ -1,0 +1,24 @@
+#
+# https://cloud.ibm.com/docs/containers/cs_ingress.html#annotations
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingres-dev
+  annotations:
+     ingress.bluemix.net/redirect-to-https: "True"
+     ingress.bluemix.net/rewrite-path: "serviceName=web-svc1 rewrite=/"
+spec:
+   tls:
+   - hosts:
+     - www.mahotakara.online
+     secretName: tls-cert
+   rules:
+   - host: www.mahotakara.online
+     http:
+       paths:
+       - path: /
+         backend:
+           serviceName: web-svc1
+           servicePort: 9080
+
